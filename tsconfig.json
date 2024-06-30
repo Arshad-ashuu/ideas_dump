@@ -32,7 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/create-post/page.jsx"
+    "src/app/create-post/page.jsx",
+    "src/components/Feed.jsx",
+    "src/components/Cards.jsx"
   ],
   "exclude": [
     "node_modules"

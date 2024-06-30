@@ -9,7 +9,6 @@ import {
   useSession,
   ClientSafeProvider,
   LiteralUnion,
-  BuiltInProviderType,
 } from "next-auth/react";
 import Link from "next/link";
 import { ModeToggle } from "./Toggle";
@@ -20,7 +19,7 @@ export default function MobileTabs(): ReactElement {
 
   const [toggleDropDown, setToggleDropDown] = useState<boolean>(false);
   const [providers, setProviders] = useState<Record<
-    LiteralUnion<BuiltInProviderType, string>,
+    LiteralUnion<string>,
     ClientSafeProvider
   > | null>(null);
 

@@ -1,10 +1,10 @@
-"use client";
+"use client"
 import Image from "next/image";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
-const Cards: React.FC = ({ data }) => {
+const Cards = ({ data }) => {
   return (
     <>
       <div className="max-w-2xl px-8 py-4 shadow-sm shadow-pink-400  bg-white  dark:bg-black border border-gray-500 rounded-xl ">
@@ -28,8 +28,8 @@ const Cards: React.FC = ({ data }) => {
             {data.idea}
           </h3>
           <p className="mt-2 text-gray-600 dark:text-gray-300 flex justofy-center items-center gap-2">
-            {data.creator.username}
-            {data.creator.username == "mohammad arshad" && (
+
+            {data.creator.username == "mohammad arshad" ? (
               <>
                 <span>
                   <svg
@@ -572,11 +572,18 @@ const Cards: React.FC = ({ data }) => {
                   </svg>
                 </span>
               </>
-            )}
+            ) :
+              <>
+                {data.creator.username}
+              </>
+            }
           </p>
         </div>
       </div>
     </>
   );
 };
+
 export default Cards;
+
+

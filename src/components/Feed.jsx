@@ -1,13 +1,13 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
-import Cards from "../components/Cards";
+import Cards from "./Cards";
 
-const Feed: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [searchText, setSearchText] = useState<string>("");
+const Feed = () => {
+  const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [ideas, setIdeas] = useState([]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
 
