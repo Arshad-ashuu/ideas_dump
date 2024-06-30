@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Cards from "../components/Cards";
+
 const Feed: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
   const [ideas, setIdeas] = useState([]);
 
-  const handleSearchChange = (e: any) => {};
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
 
   useEffect(() => {
     const fetchIdeas = async () => {
@@ -25,6 +28,19 @@ const Feed: React.FC = () => {
     fetchIdeas();
   }, []);
 
+  const filteredIdeas = ideas.filter((idea) => {
+    const tag = idea.tag ? idea.tag.toLowerCase() : ""; // Check if idea.tag is defined
+    const username =
+      idea.creator && idea.creator.username
+        ? idea.creator.username.toLowerCase()
+        : ""; // Check if idea.creator and idea.creator.username are defined
+
+    return (
+      tag.includes(searchText.toLowerCase()) ||
+      username.includes(searchText.toLowerCase())
+    );
+  });
+
   return (
     <section className="flex w-full justify-center items-center flex-col">
       <form className="relative w-full flex justify-center items-center mb-12">
@@ -34,22 +50,22 @@ const Feed: React.FC = () => {
           required
           value={searchText}
           onChange={handleSearchChange}
-          className=" lg:w-1/2 mt-12 pl-4 rounded-xl h-14 w-full focus:border-[#f0c14b] border-[#f0c14b] border shadow-lg "
+          className="lg:w-1/2 mt-12 pl-4 rounded-xl h-14 w-full focus:border-[#f0c14b] border-[#f0c14b] border shadow-lg"
         />
       </form>
       {loading ? (
         <div className="text-center mt-16">Loading...</div>
-      ) : ideas.length === 0 ? (
+      ) : filteredIdeas.length === 0 ? (
         <div className="text-center mt-16 text-lg">
           No ideas found..☹️
           <br /> Be the first to share your ideas 😸
         </div>
       ) : (
-        <>
-          {ideas.map((idea) => (
+        <div className="flex flex-wrap gap-4 justify-center items-center mt-12 px-4 mb-14">
+          {filteredIdeas.map((idea) => (
             <Cards key={idea._id} data={idea} />
           ))}
-        </>
+        </div>
       )}
     </section>
   );

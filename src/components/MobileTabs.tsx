@@ -2,16 +2,27 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { signIn, signOut, getProviders, useSession } from "next-auth/react";
+import {
+  signIn,
+  signOut,
+  getProviders,
+  useSession,
+  ClientSafeProvider,
+  LiteralUnion,
+  BuiltInProviderType,
+} from "next-auth/react";
 import Link from "next/link";
 import { ModeToggle } from "./Toggle";
-import React from "react";
+import { ReactElement } from "react";
 
-export default function MobileTabs() {
+export default function MobileTabs(): ReactElement {
   const { data: session } = useSession();
 
-  const [toggleDropDown, setToggleDropDown] = useState(false);
-  const [providers, setProviders] = useState(null);
+  const [toggleDropDown, setToggleDropDown] = useState<boolean>(false);
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null>(null);
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -46,7 +57,7 @@ export default function MobileTabs() {
       {session?.user ? (
         <button
           type="button"
-          className="flex flex-col items-center justify-center text-white "
+          className="flex flex-col items-center justify-center text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +77,7 @@ export default function MobileTabs() {
       ) : (
         <>
           {providers &&
-            Object.values(providers).map((provider) => (
+            Object.values(providers).map((provider: ClientSafeProvider) => (
               <button
                 key={provider.id}
                 onClick={() => signIn(provider.id)}
@@ -81,7 +92,7 @@ export default function MobileTabs() {
       {session?.user ? (
         <div>
           <Image
-            src={session?.user.image}
+            src={session.user.image || "/default-profile.png"}
             alt="user"
             className="rounded-full cursor-pointer"
             width={32}

@@ -13,15 +13,16 @@ export const metadata: Metadata = {
   description: "share your ideas",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+  session: any;
+}
+
+export default function RootLayout({ children, session }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <Provider session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

@@ -2,34 +2,44 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { signIn, signOut, getProviders, useSession } from "next-auth/react";
+import {
+  signIn,
+  signOut,
+  getProviders,
+  useSession,
+  ClientSafeProvider,
+  LiteralUnion,
+} from "next-auth/react";
 import Link from "next/link";
 import { ModeToggle } from "./Toggle";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+interface SessionData {
+  user?: {
+    image: string | null;
+  };
+}
+
+type Providers = Record<LiteralUnion<string>, ClientSafeProvider> | null;
+
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as { data: SessionData | null };
 
   const [toggleDropDown, setToggleDropDown] = useState(false);
-  const [providers, setProviders] = useState(null);
+  const [providers, setProviders] = useState<Providers>(null);
 
   useEffect(() => {
     const setUpProviders = async () => {
       const response = await getProviders();
       setProviders(response);
-
-      if (session?.user) {
-        toast("You are now signed in!😊");
-      }
     };
 
     setUpProviders();
-  }, []);
+  }, [session]);
 
   return (
     <div className="flex justify-center w-full p-4">
       <nav className="dark:bg-black bg-white mt-2 rounded-full border-b shadow-lg lg:w-1/2 w-full border-gray-200 dark:border-gray-600 dark:border-t">
-        <div className="max-w-7xl mx-auto md:px-6 ">
+        <div className="max-w-7xl mx-auto md:px-6">
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link
@@ -74,15 +84,17 @@ export default function Navbar() {
                 ) : (
                   <>
                     {providers &&
-                      Object.values(providers).map((provider) => (
-                        <button
-                          key={provider.id}
-                          onClick={() => signIn(provider.id)}
-                          className="text-white cursor-pointer dark:text-black dark:bg-white bg-black rounded-xl px-3 py-1"
-                        >
-                          Sign in
-                        </button>
-                      ))}
+                      Object.values(providers).map(
+                        (provider: ClientSafeProvider) => (
+                          <button
+                            key={provider.id}
+                            onClick={() => signIn(provider.id)}
+                            className="text-white cursor-pointer dark:text-black dark:bg-white bg-black rounded-xl px-3 py-1"
+                          >
+                            Sign in
+                          </button>
+                        )
+                      )}
                   </>
                 )}
               </div>
@@ -91,7 +103,7 @@ export default function Navbar() {
               {session?.user ? (
                 <div className="ml-4 relative">
                   <Image
-                    src={session?.user.image}
+                    src={session?.user.image || "/default-profile.png"}
                     alt="Profile"
                     width={38}
                     height={38}
@@ -123,7 +135,6 @@ export default function Navbar() {
                   )}
                 </div>
               ) : null}
-              <ToastContainer position="top-right" />
             </div>
           </div>
         </div>

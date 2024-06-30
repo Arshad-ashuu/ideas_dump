@@ -8,7 +8,7 @@ export default function page() {
     <div className="dark:bg-black bg-white">
       <Hero />
 
-      <div className="flex flex-wrap gap-4 justify-center items-center mt-12 px-4 mb-14">
+      <div className="">
         <Feed />
       </div>
 
