@@ -1,20 +1,20 @@
-"use client";
-
+'use client'
 import React, { useState, FormEvent } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Form from "../../components/Form";
 
-const CreatePostPage: React.FC = () => {
+const CreatePostPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
     idea: "",
     tag: "",
+
   });
 
-  const createPost = async (e: FormEvent) => {
+  const createPost = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
