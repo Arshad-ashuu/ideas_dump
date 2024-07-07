@@ -32,7 +32,7 @@ export default function MobileTabs(): ReactElement {
   }, []);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 rounded-t-2xl h-16 bg-white dark:bg-black border-t border-gray-700 flex md:hidden justify-around items-center shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 rounded-t-[42px] h-16 hover:bg-green-400 bg-white dark:bg-black border-t border-gray-700 flex md:hidden justify-around items-center shadow-lg">
       <Link
         href="/"
         className="flex flex-col items-center justify-center text-black dark:text-white"
@@ -54,8 +54,8 @@ export default function MobileTabs(): ReactElement {
       </Link>
 
       {session?.user ? (
-        <button
-          type="button"
+        <Link
+          href="/create-post"
           className="flex flex-col items-center justify-center text-white"
         >
           <svg
@@ -72,7 +72,7 @@ export default function MobileTabs(): ReactElement {
               d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
             />{" "}
           </svg>
-        </button>
+        </Link>
       ) : (
         <>
           {providers &&

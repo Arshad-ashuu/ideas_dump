@@ -8,7 +8,7 @@ export default function page() {
     <div className="dark:bg-black bg-white">
       <Hero />
 
-      <div className="">
+      <div className="p-3">
         <Feed />
       </div>
 

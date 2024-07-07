@@ -5,7 +5,7 @@ export const GET = async (request) => {
   try {
     await connectToDb();
     const ideas = await idea.find({}).populate("creator");
-    console.log("ideas", ideas);
+
     return new Response(JSON.stringify(ideas), {
       status: 200,
     });

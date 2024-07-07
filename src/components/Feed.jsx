@@ -18,7 +18,7 @@ const Feed = () => {
         const response = await fetch("/api/idea");
         const data = await response.json();
         setIdeas(data);
-        console.log(data);
+
       } catch (error) {
         console.error("Error fetching ideas:", error);
       } finally {
@@ -58,10 +58,9 @@ const Feed = () => {
       ) : filteredIdeas.length === 0 ? (
         <div className="text-center mt-16 text-lg">
           No ideas found..☹️
-          <br /> Be the first to share your ideas 😸
         </div>
       ) : (
-        <div className="flex flex-wrap gap-4 justify-center items-center mt-12 px-4 mb-14">
+        <div className="flex flex-wrap gap-4 justify-center items-center mt-12 ">
           {filteredIdeas.map((idea) => (
             <Cards key={idea._id} data={idea} />
           ))}
