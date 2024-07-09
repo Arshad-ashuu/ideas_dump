@@ -561,7 +561,7 @@ export default function Hero() {
       <p className="dark:text-white text-black text-lg mt-4 flex flex-wrap justify-center px-4 items-center flex-col">
         Discover, create and share creative ideas
         <br />
-        Ai powered ideas dump tool to show your creativity
+       show your creativity 💡 of your imagination and ideas
       </p>
     </div>
   );
